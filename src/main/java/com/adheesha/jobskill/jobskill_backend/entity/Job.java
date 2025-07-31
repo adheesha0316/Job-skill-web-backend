@@ -24,11 +24,11 @@ public class Job {
     private String jobType;
     private Double salary;
 
-    @Column(name = "logo_path")
+    @Column(name = "logoPath")
     private String logoPath;
 
     @ManyToOne
-    @JoinColumn(name = "employer_id", nullable = false) // FK to Employer
+    @JoinColumn(name = "employerId", nullable = false) // FK to Employer
     private Employer employer;
 
     @OneToMany(mappedBy = "job", cascade = CascadeType.ALL, orphanRemoval = true)

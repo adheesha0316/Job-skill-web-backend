@@ -29,7 +29,7 @@ public class Course {
     private CourseStatus status;
 
     @ManyToOne
-    @JoinColumn(name = "trainer_id", nullable = false)
+    @JoinColumn(name = "trainerId", nullable = false)
     private Trainer trainer;
 
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)

@@ -20,12 +20,12 @@ public class JobSeeker {
     private String experience;
     private String resumePath;
 
-    @Column(name = "profile_image")
+    @Column(name = "profileImage")
     private String profileImage;
 
     // 🔗 Many-to-One with User (each seeker is a user)
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "userId", nullable = false)
     private User user;
 
     // 🔗 One-to-Many with Skills

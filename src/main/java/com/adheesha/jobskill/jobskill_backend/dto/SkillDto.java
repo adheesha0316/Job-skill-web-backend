@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class SkillDto {
     private Integer skillId;
-    private String skill_name;
+    private String skillName;
     private Integer seekerId;
 }

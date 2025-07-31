@@ -16,10 +16,10 @@ public class Skill {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer skillId;
 
-    private String skill_name;
+    private String skillName;
 
     // 🔗 Many-to-One: Many skills can belong to one job_seeker
     @ManyToOne
-    @JoinColumn(name = "seeker_id", nullable = false)
+    @JoinColumn(name = "seekerId", nullable = false)
     private JobSeeker seeker;
 }

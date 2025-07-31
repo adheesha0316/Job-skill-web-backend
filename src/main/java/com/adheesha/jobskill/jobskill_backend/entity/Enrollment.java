@@ -24,11 +24,11 @@ public class Enrollment {
 
     // 🔗 Many-to-One: Many enrollments can point to one course
     @ManyToOne
-    @JoinColumn(name = "course_id", nullable = false)
+    @JoinColumn(name = "courseId", nullable = false)
     private Course course;
 
     // 🔗 Many-to-One: Many enrollments can belong to one seeker
     @ManyToOne
-    @JoinColumn(name = "seeker_id", nullable = false)
+    @JoinColumn(name = "seekerId", nullable = false)
     private JobSeeker seeker;
 }

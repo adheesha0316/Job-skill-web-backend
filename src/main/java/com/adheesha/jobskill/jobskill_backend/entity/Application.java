@@ -20,11 +20,11 @@ public class Application {
     private Integer applicationId;
 
     @ManyToOne
-    @JoinColumn(name = "job_id", nullable = false)
+    @JoinColumn(name = "jobId", nullable = false)
     private Job job;
 
     @ManyToOne
-    @JoinColumn(name = "seeker_id", nullable = false)
+    @JoinColumn(name = "seekerId", nullable = false)
     private JobSeeker seeker;
 
     private String resume;

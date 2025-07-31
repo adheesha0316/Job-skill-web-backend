@@ -20,14 +20,14 @@ public class Employer {
     private Integer employerId;
 
     @OneToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "userId")
     private User user;
 
     private String companyName;
     private String contactNumber;
     private String address;
 
-    @Column(name = "profile_image")
+    @Column(name = "profileImage")
     private String profileImage; // file path like uploads/logos/logo.png
 
 
