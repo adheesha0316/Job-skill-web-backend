@@ -10,10 +10,12 @@ import com.adheesha.jobskill.jobskill_backend.enums.Role;
 import com.adheesha.jobskill.jobskill_backend.repo.UserRepo;
 import com.adheesha.jobskill.jobskill_backend.utill.JWTTokenGenerator;
 import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Service;
 
 import java.util.Base64;
 import java.util.Optional;
 
+@Service
 public class UserServiceImpl implements UserService {
     private final UserRepo userRepo;
     private final JWTTokenGenerator jwtTokenGenerator;
