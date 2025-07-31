@@ -2,6 +2,8 @@ package com.adheesha.jobskill.jobskill_backend.repo;
 
 import com.adheesha.jobskill.jobskill_backend.entity.Enrollment;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -16,4 +18,9 @@ public interface EnrollmentRepo extends JpaRepository<Enrollment, Integer> {
     Enrollment findBySeekerSeekerIdAndCourseCourseId(Integer seekerId, Integer courseId);
 
     List<Enrollment> findByCourse_Trainer_TrainerId(Integer trainerId);
+
+    // Custom query to get enrolled course IDs by seeker
+    @Query("SELECT e.course.courseId FROM Enrollment e WHERE e.seeker.seekerId = :seekerId")
+    List<Integer> findCourseIdsBySeekerId(@Param("seekerId") Integer seekerId);
+
 }
