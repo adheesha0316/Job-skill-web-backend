@@ -1,5 +1,6 @@
 package com.adheesha.jobskill.jobskill_backend.entity;
 
+import com.adheesha.jobskill.jobskill_backend.enums.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,4 +18,7 @@ public class User {
     private String userName;
     private String email;
     private String password;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
 }
