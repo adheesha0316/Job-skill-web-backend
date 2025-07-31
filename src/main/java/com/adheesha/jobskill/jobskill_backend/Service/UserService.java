@@ -1,4 +1,4 @@
-package com.adheesha.jobskill.jobskill_backend.service.Impl;
+package com.adheesha.jobskill.jobskill_backend.Service;
 
 import com.adheesha.jobskill.jobskill_backend.dto.LoginRequestDto;
 import com.adheesha.jobskill.jobskill_backend.dto.LoginResponseDto;
