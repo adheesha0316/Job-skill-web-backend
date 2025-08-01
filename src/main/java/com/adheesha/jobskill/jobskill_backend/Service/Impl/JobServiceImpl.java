@@ -35,6 +35,7 @@ public class JobServiceImpl implements JobService {
 
     @Override
     public JobDto createJobWithLogo(String title, String description, String location, String jobType, Double salary, Integer employerId, MultipartFile logoFile) {
+        // Fetch Employer or throw if not found
         Employer employer = employerRepo.findById(employerId)
                 .orElseThrow(() -> new RuntimeException("Employer not found"));
 
@@ -46,25 +47,45 @@ public class JobServiceImpl implements JobService {
         job.setSalary(salary);
         job.setEmployer(employer);
 
-        // Handle logo
+        // Handle logo upload
         if (logoFile != null && !logoFile.isEmpty()) {
-            String fileName = UUID.randomUUID() + "_" + logoFile.getOriginalFilename();
+            // Sanitize original filename to avoid issues
+            String originalFilename = logoFile.getOriginalFilename();
+            if (originalFilename != null) {
+                originalFilename = originalFilename.replaceAll("[^a-zA-Z0-9\\.\\-]", "_");
+            } else {
+                originalFilename = "unknown.png";
+            }
+            String fileName = UUID.randomUUID() + "_" + originalFilename;
+
+            // Directory where logos are stored
             File dir = new File(System.getProperty("user.dir") + "/uploads/logos/");
             if (!dir.exists()) dir.mkdirs();
 
             try {
                 File dest = new File(dir, fileName);
                 logoFile.transferTo(dest);
-                job.setLogoPath("uploads/logos/" + fileName);
+                // Set web-accessible path for the logo
+                job.setLogoPath("/logos/" + fileName);
             } catch (IOException e) {
-                throw new RuntimeException("Failed to upload logo", e);
+                e.printStackTrace();
+                throw new RuntimeException("Logo upload failed: " + e.getMessage());
             }
         } else {
-            job.setLogoPath("uploads/logos/default.png");
+            // Default logo path (make sure this file exists)
+            job.setLogoPath("/logos/default.png");
         }
 
-        Job saved = jobRepo.save(job);
-        return modelMapper.map(saved, JobDto.class);
+        // IMPORTANT: Maintain bidirectional relationship consistency
+        employer.getJobs().add(job);
+
+        try {
+            Job saved = jobRepo.save(job);
+            return modelMapper.map(saved, JobDto.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Failed to save job: " + e.getMessage());
+        }
     }
 
     @Override
