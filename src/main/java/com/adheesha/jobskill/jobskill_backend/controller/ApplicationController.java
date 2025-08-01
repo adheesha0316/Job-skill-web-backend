@@ -1,7 +1,9 @@
 package com.adheesha.jobskill.jobskill_backend.controller;
 
 import com.adheesha.jobskill.jobskill_backend.Service.ApplicationService;
+import com.adheesha.jobskill.jobskill_backend.Service.CVMatchService;
 import com.adheesha.jobskill.jobskill_backend.dto.ApplicationDto;
+import com.adheesha.jobskill.jobskill_backend.dto.CVMatchRequestDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,11 +17,14 @@ import java.util.List;
 public class ApplicationController {
 
     private final ApplicationService applicationService;
+    private final CVMatchService cvMatchService;
 
     @Autowired
-    public ApplicationController(ApplicationService applicationService) {
+    public ApplicationController(ApplicationService applicationService, CVMatchService cvMatchService) {
         this.applicationService = applicationService;
+        this.cvMatchService = cvMatchService;
     }
+
 
     @PostMapping("/apply")
     public ResponseEntity<ApplicationDto> applyToJob(@RequestBody ApplicationDto applicationDto) {
@@ -60,5 +65,11 @@ public class ApplicationController {
         return success
                 ? ResponseEntity.ok("Application withdrawn successfully")
                 : ResponseEntity.status(HttpStatus.NOT_FOUND).body("Application not found");
+    }
+
+    @PostMapping("/match")
+    public ResponseEntity<Double> getCVMatchScore(@RequestBody CVMatchRequestDto request) {
+        double score = cvMatchService.getMatchScore(request.getResumeUrl(), request.getJobId());
+        return ResponseEntity.ok(score);
     }
 }
